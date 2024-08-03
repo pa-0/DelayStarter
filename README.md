@@ -8,7 +8,7 @@ Application to start other programs after an internet connection. If there is no
 ## Setup
 1. Add the full paths of the required applications to the `Apps.txt` file.
 2. Add the application shortcut to the Windows autorun `%AppData%\Microsoft\Windows\Start Menu\Programs\Startup`.
-3. The approximate time is set in the `Setup.ini` file, in milliseconds, it can be recorded automatically if you change the `FirstRun` parameter to `1`.
+3. The approximate time is set in the `Setup.ini` file, in seconds, it can be recorded automatically if you change the `FirstRun` parameter to `1`.
 
 ## Screenshots
 ![](https://github.com/user-attachments/assets/4caab111-b33c-4ba5-ba1f-4f17c83eee3b)
