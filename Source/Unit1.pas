@@ -106,7 +106,7 @@ begin
 
   Ini:=TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'Setup.ini');
   FirstRun:=Ini.ReadBool('Main', 'FirstRun', False);
-  LaunchTime:=Ini.ReadInteger('Main', 'LaunchTime', 0);
+  LaunchTime:=Ini.ReadInteger('Main', 'LaunchTime', 0) * 1000;
   Ini.Free;
 
   AppsList:=TStringList.Create;
@@ -173,7 +173,7 @@ begin
       if FirstRun then begin
         Ini:=TIniFile.Create(ExtractFilePath(ParamStr(0)) + 'Setup.ini');
         Ini.WriteBool('Main', 'FirstRun', False);
-        Ini.WriteInteger('Main', 'LaunchTime', GetTickCount - StartTime);
+        Ini.WriteInteger('Main', 'LaunchTime', (GetTickCount - StartTime) div 1000);
         Ini.Free;
       end;
 
