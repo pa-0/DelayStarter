@@ -10,8 +10,10 @@ type
   TMain = class(TForm)
     Panel: TPanel;
     TextLbl: TLabel;
+    TimerDelay: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure TimerDelayTimer(Sender: TObject);
   private
     procedure ThreadTerminate(Sender: TObject);
     { Private declarations }
@@ -22,7 +24,7 @@ type
   TMyThread = class(TThread)
     private
       { Private declarations }
-      procedure UpdateUI;
+      //procedure UpdateUI;
     protected
       procedure Execute; override;
   end;
@@ -149,15 +151,10 @@ begin
   Result:=Format('%d:%2.2d', [Minutes, Seconds]);
 end;
 
-procedure TMyThread.UpdateUI;
-var
-  RemainingTime: int64;
+{procedure TMyThread.UpdateUI;
 begin
-  RemainingTime:=LaunchTime - (GetTickCount - StartTime);
-  if RemainingTime < 0 then RemainingTime:=0;
 
-  Main.TextLbl.Caption:=IDS_WAITING_INTERNET_CONNECTION + #13#10 + IDS_REMAINING_TIME + MsToMinSec(RemainingTime);
-end;
+end;}
 
 procedure TMyThread.Execute;
 var
@@ -166,7 +163,7 @@ var
   i, DelimPos: integer;
 begin
   while not Terminated do begin
-    Synchronize(UpdateUI);
+    //Synchronize(UpdateUI);
 
     if HTTPGet('http://www.msftconnecttest.com/connecttest.txt') = 'Microsoft Connect Test' then begin
 
@@ -203,6 +200,16 @@ begin
 
     Sleep(1000);
   end;
+end;
+
+procedure TMain.TimerDelayTimer(Sender: TObject);
+var
+  RemainingTime: int64;
+begin
+  RemainingTime:=LaunchTime - (GetTickCount - StartTime);
+  if RemainingTime < 0 then RemainingTime:=0;
+
+  Main.TextLbl.Caption:=IDS_WAITING_INTERNET_CONNECTION + #13#10 + IDS_REMAINING_TIME + MsToMinSec(RemainingTime);
 end;
 
 end.
